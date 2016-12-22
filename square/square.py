@@ -5,7 +5,11 @@ def draw_square():
     window.bgcolor("red")
 
     brad = turtle.Turtle()
-    brad.forward(100)
+    brad.shape("circle")
+    brad.color("white")
+    brad.speed(5)
+
+    quare.pyrad.forward(100)
     brad.right(90)
     brad.forward(100)
     brad.right(90)
@@ -13,6 +17,11 @@ def draw_square():
     brad.right(90)
     brad.forward(100)
     brad.right(90)
+
+    angie = turtle.Turtle()
+    angie.shape("arrow")
+    angie.color("blue")
+    angie.circle(100)
 
     window.exitonclick()
 
