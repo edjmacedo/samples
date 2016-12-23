@@ -3,17 +3,20 @@ import turtle
 def create_window():
     window = turtle.Screen()
     window.bgcolor("red")
-    draw_square()
-    draw_circle()
-    draw_triangle()
-    window.exitonclick()
 
-def draw_square():
     brad = turtle.Turtle()
     brad.shape("circle")
     brad.color("white")
     brad.speed(5)
 
+    for i in range(1,37):
+        draw_square(brad)
+        brad.right(10)
+    #draw_circle()
+    #draw_triangle()
+    window.exitonclick()
+
+def draw_square(brad):
     square_side = 0
     while square_side < 4:
         brad.right(90)
