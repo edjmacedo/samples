@@ -43,10 +43,15 @@
                             <p>{{dishDetailCtrl.dish.description}}</p>
                         </div>
                     </li>
-                </ul>    
+                </ul>
             </div>
             <div class="col-xs-9 col-xs-offset-1">
-                <p>Put the comments here</p>
+              <strong>Customer Comments</strong> Sort By: <input type="text" ng-model="sortCriteria"/>
+              <blockquote ng-repeat="dishComment in dishDetailCtrl.dish.comments | orderBy: sortCriteria">
+                    <p>{{dishComment.rating}} Stars</p>
+                    <p>{{dishComment.comment}}</p>
+                    <footer>{{dishComment.author}}, {{dishComment.date | date}}</footer>
+              </blockquote>                
             </div>
         </div>
 
