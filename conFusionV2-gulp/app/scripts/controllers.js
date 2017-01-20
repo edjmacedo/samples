@@ -52,7 +52,7 @@ angular.module('confusionApp')
                 
                 console.log($scope.feedback);
                 
-                if ($scope.feedback.agree && ($scope.feedback.mychannel == "")) {
+                if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
                     $scope.invalidChannelSelection = true;
                     console.log('incorrect');
                 }
@@ -130,7 +130,7 @@ angular.module('confusionApp')
                  $scope.commentForm.$setPristine();
                 //Step 5: reset your JavaScript object that holds your comment
                 $scope.comment = {author: "", rating: 5, comment: "", date: new Date().toISOString()};
-            }
+            };
         }])
 
 ;
