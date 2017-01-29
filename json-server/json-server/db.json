@@ -210,6 +210,18 @@
     }
   ],
   "feedback": [
-
+    {
+      "mychannel": "Email",
+      "firstName": "Edvan",
+      "lastName": "Macedo",
+      "agree": true,
+      "email": "ed@ed.com",
+      "tel": {
+        "areaCode": "92",
+        "number": "984221000"
+      },
+      "comments": "cdcdcdcdcd",
+      "id": 1
+    }
   ]
 }
