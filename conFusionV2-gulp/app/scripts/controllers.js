@@ -7,47 +7,43 @@ angular.module('confusionApp')
             $scope.tab = 1;
             $scope.filtText = '';
             $scope.showDetails = false;
-            $scope.dishes= [];
             $scope.showMenu = false;
             $scope.message = "Loading ...";
-            $scope.dishes = {};
-            
-            
-             menuFactory.getDishes()
-            .then(
-                function(response) {
-                    $scope.dishes = response.data;
-                    $scope.showMenu = true;
-                },
-                function(response) {
-                    $scope.message = "Error: "+response.status + " " + response.statusText;
-                }
-            );                        
-                        
-            $scope.select = function(setTab) {
-                $scope.tab = setTab;
-                
-                if (setTab === 2) {
-                    $scope.filtText = "appetizer";
-                }
-                else if (setTab === 3) {
-                    $scope.filtText = "mains";
-                }
-                else if (setTab === 4) {
-                    $scope.filtText = "dessert";
-                }
-                else {
-                    $scope.filtText = "";
-                }
-            };
 
-            $scope.isSelected = function (checkTab) {
-                return ($scope.tab === checkTab);
-            };
-    
-            $scope.toggleDetails = function() {
-                $scope.showDetails = !$scope.showDetails;
-            };
+            menuFactory.getDishes().query(
+            function(response) {
+                $scope.dishes = response;
+                $scope.showMenu = true;
+            },
+            function(response) {
+                $scope.message = "Error: "+response.status + " " + response.statusText;
+            }
+        );
+
+        $scope.select = function(setTab) {
+            $scope.tab = setTab;
+
+            if (setTab === 2) {
+                $scope.filtText = "appetizer";
+            }
+            else if (setTab === 3) {
+                $scope.filtText = "mains";
+            }
+            else if (setTab === 4) {
+                $scope.filtText = "dessert";
+            }
+            else {
+                $scope.filtText = "";
+            }
+        };
+
+        $scope.isSelected = function (checkTab) {
+            return ($scope.tab === checkTab);
+        };
+
+        $scope.toggleDetails = function() {
+            $scope.showDetails = !$scope.showDetails;
+        };
         }])
 
         .controller('ContactController', ['$scope', function($scope) {
@@ -83,19 +79,21 @@ angular.module('confusionApp')
 
         .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
 
-            $scope.dish = {};
             $scope.showDish = false;
-            $scope.message="Loading ...";
-            menuFactory.getDish(parseInt($stateParams.id,10))
-            .then(
-                function(response){
-                    $scope.dish = response.data;
-                    $scope.showDish=true;
-                },
-                function(response) {
-                    $scope.message = "Error: "+response.status + " " + response.statusText;
-                }
-            );
+            $scope.message = "Loading ...";
+
+            $scope.dish = menuFactory.getDishes()
+            .get({id:parseInt($stateParams.id,10)})
+                .$promise.then(
+                    function(response) {
+                        $scope.dish = response;
+                        $scope.showDish = true;
+                    },
+                    function(response) {
+                        $scope.message = "Error: "+response.status+" " + response.statusText;
+                    }
+                )
+
             
         }])
 
@@ -118,23 +116,46 @@ angular.module('confusionApp')
 
         // implement the IndexController and About Controller here
          .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function ($scope, menuFactory, corporateFactory) {
-            $scope.featuredDish = {};
-            $scope.showDish = false;
-            $scope.message="Loading ...";
+             
+           /*menuFactory.getPromotion().get({id:0})
+            .$promise.then(
+                function(response){
+                    $scope.promotion = response;
+                    $scope.showPromotion = true;
+                },
+                function(response){
+                    $scope.message = "Error: "+response.status+" "+response.statusText;
+                }
+            );
 
-            menuFactory.getDish(0)
-                .then(
+            $scope.showChef = false;
+
+            corporateFactory.getLeaders().get({id:3})
+                .$promise.then(
                     function(response){
-                        $scope.featuredDish = response.data;
-                        $scope.showDish = true;
+                        $scope.showChef = true;
+                        $scope.chef = response;
                     },
                     function(response) {
                         $scope.message = "Error: "+response.status + " " + response.statusText;
                     }
-                );
-            //$scope.featuredDish = menuFactory.getDish(0);
-            $scope.featuredPromotion = menuFactory.getPromotion(0);
+                );*/
+             
+            $scope.promotion = menuFactory.getPromotion(0);
             $scope.executiveChef = corporateFactory.getLeader(0);
+
+            $scope.showDish = false;
+            $scope.message = "Loading ...";
+            $scope.dish = menuFactory.getDishes().get({id:0})
+                .$promise.then(
+                function(response){
+                    $scope.dish = response;
+                    $scope.showDish = true;
+                },
+                function(response){
+                    $scope.message = "Error: "+response.status+ " " + response.statusText;
+                }
+            );
 
         }])
 
